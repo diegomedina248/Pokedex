@@ -6,6 +6,7 @@
  */
 
 module.exports = {
+  'isomorphic-fetch': 'fetch',
   transformer: {
     getTransformOptions: async () => ({
       transform: {

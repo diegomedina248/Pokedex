@@ -1,6 +1,9 @@
 import httpClient from './HttpClient';
+import wikiClient from './WikiClient';
 
 const POKEMON_LIMIT = 24;
+const POKEMON_PAGE_SUFFIX = '_(Pokémon)';
+const POKEMON_BIO_CONTENT = 'Biology';
 
 class PokemonController {
   constructor() {
@@ -29,7 +32,21 @@ class PokemonController {
   fetchPokemon = async (id) => {
     const response = await httpClient.get(`${this.basePath}/${id}`);
 
-    return response.data;
+    const { data: { name } } = response;
+    const pokemonName = name.charAt(0).toUpperCase() + name.slice(1);
+
+    const wikiDataResponse = await wikiClient.page(`${pokemonName}${POKEMON_PAGE_SUFFIX}`);
+    const wikiContent = await wikiDataResponse.content();
+    const biology = wikiContent.find(section => section.title.includes(POKEMON_BIO_CONTENT));
+
+    if (!biology) {
+      return response.data;
+    }
+
+    return {
+      ...response.data,
+      biology: biology.content,
+    };
   }
 
   fetchPokemonColors = async () => {

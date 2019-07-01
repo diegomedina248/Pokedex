@@ -5,11 +5,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Transition } from 'react-navigation-fluid-transitions';
 
 import styles from './styles';
-import PokemonBottom from './PokedexBottom';
-
-import PokedexLoadingIndicator from './PokedexLoadingIndicator';
-import PokedexBottomHandle from './PokedexBottomHandle';
-import PokedexRightHandle from './PokedexRightHandle';
+import PokemonBottom from './components/PokedexBottom';
+import PokedexLoadingIndicator from './components/PokedexLoadingIndicator';
+import PokedexBottomHandle from './components/PokedexBottomHandle';
+import PokedexRightHandle from './components/PokedexRightHandle';
 import PokedexHeader, { HEIGHT } from 'components/common/PokedexHeader';
 
 import { fetchPokemonList, actionTypes } from 'actions/PokemonActions';

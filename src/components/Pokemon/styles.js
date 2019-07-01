@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native';
 
+import { WHITE, SILVER, SHARK, BLACK } from 'helpers/Colors';
+
 export const headerStyles = StyleSheet.create({
   container: {
     paddingTop: 40,
@@ -21,12 +23,12 @@ export const headerStyles = StyleSheet.create({
   },
   name: {
     textTransform: 'capitalize',
-    color: 'white',
+    color: WHITE,
     fontWeight: 'bold',
     fontSize: 28,
   },
   number: {
-    color: 'white',
+    color: WHITE,
     fontWeight: 'bold',
     fontSize: 16,
     paddingTop: 6,
@@ -45,12 +47,48 @@ export const headerStyles = StyleSheet.create({
     width: 160,
     height: 160,
     resizeMode: 'cover',
-    tintColor: '#FFFFFF',
+    tintColor: WHITE,
     opacity: 0.2,
   },
   itemImage: {
     width: 140,
     height: 140,
+  },
+});
+
+export const sizeStyles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignSelf: 'stretch',
+    paddingVertical: 20,
+    paddingHorizontal: 30,
+    marginVertical: 30,
+    backgroundColor: WHITE,
+    borderRadius: 8,
+    elevation: 5,
+    shadowRadius: 5,
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowColor: BLACK,
+    shadowOpacity: 0.2,
+  },
+  item: {
+    flex: 1,
+  },
+  title: {
+    textAlign: 'left',
+    color: SILVER,
+    fontWeight: '600',
+    fontSize: 15,
+    marginBottom: 4,
+  },
+  content: {
+    textAlign: 'left',
+    fontWeight: '500',
+    color: SHARK,
   },
 });
 
@@ -69,9 +107,14 @@ export const baseStyles = StyleSheet.create({
     flexGrow: 1,
     marginLeft: -1,
     marginRight: -1,
-    backgroundColor: '#ffffff',
+    backgroundColor: WHITE,
     paddingTop: 32,
     paddingBottom: 20,
     paddingHorizontal: 25,
+  },
+  biology: {
+    color: SHARK,
+    lineHeight: 24,
+    fontWeight: '500',
   },
 });

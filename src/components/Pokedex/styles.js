@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native';
 
+import { WHITE } from 'helpers/Colors';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -40,7 +42,7 @@ const styles = StyleSheet.create({
   },
   itemName: {
     textTransform: 'capitalize',
-    color: 'white',
+    color: WHITE,
     fontWeight: 'bold',
     fontSize: 15,
     paddingLeft: 16,
@@ -60,7 +62,7 @@ const styles = StyleSheet.create({
     width: 85,
     height: 85,
     resizeMode: 'cover',
-    tintColor: '#FFFFFF',
+    tintColor: WHITE,
     opacity: 0.2,
   },
   itemImage: {

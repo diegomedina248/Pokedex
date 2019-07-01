@@ -4,7 +4,7 @@ import { Transition } from 'react-navigation-fluid-transitions';
 import PropTypes from 'prop-types';
 import FastImage from 'react-native-fast-image';
 
-import { headerStyles as styles } from './styles';
+import { headerStyles as styles } from '../styles';
 import colors from 'helpers/PokemonColors';
 
 import pokeballIcon from 'assets/ic_pokeball/ic_pokeball.png';
