@@ -1,25 +1,20 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, FlatList } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import styles from './styles';
 import PokemonItem from './PokemonItem';
 import { POKEMON } from 'helpers/Screens';
 import { POKEMON_ID } from 'helpers/ScreenParams';
-import { fetchPokemonList } from 'actions/PokemonActions';
+import PokedexHeader from 'components/common/PokedexHeader';
 
 import { getPokemonList } from 'selectors/PokemonSelectors';
 
 const COLUMNS = 2;
 
 const Pokedex = ({ navigation }) => {
-  const dispatch = useDispatch();
   const pokemonList = useSelector(getPokemonList);
-
-  useEffect(() => {
-    dispatch(fetchPokemonList);
-  }, [dispatch]);
 
   const keyExtractor = item => `${item.id}`;
   const onPress = id => navigation.navigate(POKEMON, {
@@ -35,15 +30,20 @@ const Pokedex = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        numColumns={COLUMNS}
-        data={pokemonList}
-        keyExtractor={keyExtractor}
-        renderItem={renderItem}
-        columnWrapperStyle={styles.rowContainer}
-        contentContainerStyle={styles.contentContainer}
-        showsVerticalScrollIndicator={false}
-      />
+      <View style={styles.headerContainer}>
+        <PokedexHeader />
+      </View>
+      <View style={styles.listContainer}>
+        <FlatList
+          numColumns={COLUMNS}
+          data={pokemonList}
+          keyExtractor={keyExtractor}
+          renderItem={renderItem}
+          columnWrapperStyle={styles.rowContainer}
+          contentContainerStyle={styles.contentContainer}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
     </View>
   );
 };

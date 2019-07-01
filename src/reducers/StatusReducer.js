@@ -33,7 +33,7 @@ export default (state = {}, action) => {
   }
 
   if (!key) {
-    return status;
+    return state;
   }
 
   return {

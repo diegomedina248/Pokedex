@@ -4,10 +4,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  headerContainer: {
+    zIndex: 2,
+  },
+  listContainer: {
+    zIndex: 1,
+    marginTop: -45,
+  },
   contentContainer: {
     paddingHorizontal: 6,
-    paddingTop: 110,
-    paddingBottom: 20,
+    paddingBottom: 170,
+    paddingTop: 65,
   },
   rowContainer: {
     flex: 1,
@@ -21,6 +28,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1,
     minHeight: 130,
+    overflow: 'hidden',
   },
   itemNumber: {
     fontWeight: 'bold',

@@ -10,6 +10,7 @@ module.exports = {
           components: './src/components',
           controllers: './src/controllers',
           helpers: './src/helpers',
+          hooks: './src/hooks',
           localization: './src/localization',
           reducers: './src/reducers',
           selectors: './src/selectors',

@@ -1,6 +1,6 @@
 import httpClient from './HttpClient';
 
-const POKEMON_LIMIT = 20;
+const POKEMON_LIMIT = 24;
 
 class PokemonController {
   constructor() {
