@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StatusBar } from 'react-native';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -50,6 +50,7 @@ const Pokemon = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor={pokemonColors.primary} animated />
       <PokemonHeader
         onBackPress={onBackPress}
         {...pokemon}

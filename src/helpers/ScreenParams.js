@@ -1,3 +1,2 @@
-/* eslint-disable import/prefer-default-export */
-
 export const POKEMON_ID = 'id';
+export const ERROR = 'error';

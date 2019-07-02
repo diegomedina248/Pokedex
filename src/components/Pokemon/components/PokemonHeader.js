@@ -13,6 +13,7 @@ import Chip from 'components/common/Chip';
 
 const ID_DIGITS = 3;
 const BACK_OPACITY_ON_PRESS = 0.7;
+const MAX_TYPES = 3;
 
 const PokemonHeader = ({
   id,
@@ -29,7 +30,7 @@ const PokemonHeader = ({
     backgroundColor: pokemonColors.primary,
   };
 
-  const typeChips = types.slice(0, 2).map(type => (
+  const typeChips = types.slice(0, MAX_TYPES).map(type => (
     <Chip
       color={pokemonColors.secondary}
       containerStyles={{

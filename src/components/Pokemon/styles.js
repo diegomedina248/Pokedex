@@ -1,10 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 import { WHITE, SILVER, SHARK, BLACK } from 'helpers/Colors';
 
 export const headerStyles = StyleSheet.create({
   container: {
-    paddingTop: 40,
+    paddingTop: Platform.OS === 'ios' ? 40 : 0,
     paddingHorizontal: 25,
   },
   backItemContainer: {

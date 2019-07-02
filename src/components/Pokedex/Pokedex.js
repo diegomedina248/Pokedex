@@ -4,17 +4,20 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import styles from './styles';
-import PokemonItem from './PokemonItem';
+import PokemonItem from './components/PokemonItem';
 import { POKEMON } from 'helpers/Screens';
 import { POKEMON_ID } from 'helpers/ScreenParams';
 import PokedexHeader from 'components/common/PokedexHeader';
 
 import { getPokemonList } from 'selectors/PokemonSelectors';
+import { useCustomBackAction } from 'hooks/NavigationHooks';
 
 const COLUMNS = 2;
 
 const Pokedex = ({ navigation }) => {
   const pokemonList = useSelector(getPokemonList);
+
+  useCustomBackAction(navigation, () => true);
 
   const keyExtractor = item => `${item.id}`;
   const onPress = id => navigation.navigate(POKEMON, {
@@ -51,5 +54,9 @@ const Pokedex = ({ navigation }) => {
 Pokedex.propTypes = {
   navigation: PropTypes.object.isRequired,
 };
+
+Pokedex.navigationOptions = () => ({
+  gesturesEnabled: false,
+});
 
 export default Pokedex;

@@ -4,7 +4,7 @@ import { Transition } from 'react-navigation-fluid-transitions';
 import PropTypes from 'prop-types';
 import FastImage from 'react-native-fast-image';
 
-import styles from './styles';
+import styles from '../styles';
 import colors from 'helpers/PokemonColors';
 
 import pokeballIcon from 'assets/ic_pokeball/ic_pokeball.png';
@@ -12,6 +12,7 @@ import Chip from 'components/common/Chip';
 
 const ID_DIGITS = 3;
 const OPACITY_ON_HIGHLIGHT = 0.85;
+const MAX_TYPES = 2;
 
 const PokemonItem = ({
   id,
@@ -31,7 +32,7 @@ const PokemonItem = ({
     borderColor: pokemonColors.secondary,
   };
 
-  const typeChips = types.slice(0, 2).map(type => (
+  const typeChips = types.slice(0, MAX_TYPES).map(type => (
     <Chip
       color={pokemonColors.secondary}
       containerStyles={{
