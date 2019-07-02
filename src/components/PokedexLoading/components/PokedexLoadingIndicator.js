@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 
 const { height } = Dimensions.get('window');
 
-const PokedexLoadingIndicator = ({ aboveHeight, opacity }) => {
+const PokedexLoadingIndicator = ({ aboveHeight }) => {
   const bottomHeight = height - aboveHeight;
   const top = (bottomHeight / 2) - (HEIGHT / 2);
 
@@ -38,7 +38,6 @@ const PokedexLoadingIndicator = ({ aboveHeight, opacity }) => {
           strokeWidth={BORDER_WIDTH}
           stroke={BROWN_BRAMBLE}
           fill={CASABLANCA}
-          fillOpacity={opacity}
         />
       </Svg>
     </Animated.View>
@@ -47,7 +46,6 @@ const PokedexLoadingIndicator = ({ aboveHeight, opacity }) => {
 
 PokedexLoadingIndicator.propTypes = {
   aboveHeight: PropTypes.number.isRequired,
-  opacity: PropTypes.number.isRequired,
 };
 
 export default PokedexLoadingIndicator;
