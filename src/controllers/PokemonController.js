@@ -38,32 +38,53 @@ class PokemonController {
       },
     } = response;
 
-    try {
-      const species = await httpClient.get(`${this.basePath}-species/${speciesName}`);
+    const species = await httpClient.get(`${this.basePath}-species/${speciesName}`);
 
-      const { data: { names, color: { name: baseColor } } } = species;
-      const pokemonName = names.find(info => info.language.name === 'en').name;
-      const pokemonNumber = `00${pokemonId}`.slice(-ID_DIGITS);
+    const { data: { names, color: { name: baseColor } } } = species;
+    const pokemonName = names.find(info => info.language.name === 'en').name;
+    const pokemonNumber = `00${pokemonId}`.slice(-ID_DIGITS);
 
-      const wikiDataResponse = await wikiClient.page(`${pokemonName}${POKEMON_PAGE_SUFFIX}`);
-      const wikiContent = await wikiDataResponse.content();
+    const wikiDataResponse = await wikiClient.page(`${pokemonName}${POKEMON_PAGE_SUFFIX}`);
 
-      const biology = wikiContent.find(section => section.title.includes(POKEMON_BIO_CONTENT));
+    const image = await this.fetchPokemonImage(pokemonName, wikiDataResponse);
+    const biology = await this.fetchPokemonBiology(wikiDataResponse);
 
-      if (!biology) {
-        return response.data;
-      }
+    return {
+      ...response.data,
+      baseColor,
+      defaultImage: image || frontDefault,
+      pokemonNumber,
+      biology: biology.content,
+    };
+  }
 
-      return {
-        ...response.data,
-        baseColor,
-        defaultImage: frontDefault,
-        pokemonNumber,
-        biology: biology.content,
-      };
-    } catch (error) {
-      return response.data;
+  fetchPokemonImage = async (pokemonName, wikiDataResponse) => {
+    const response = await httpClient.get(wikiDataResponse.raw.canonicalurl, {
+      baseUrl: '',
+      responseType: 'text',
+    });
+    const html = response.data;
+
+    const parsedName = pokemonName.replace('’', '&#39;');
+    const findImage = `<img alt="${parsedName}" src="`;
+
+    const start = html.indexOf(findImage) + findImage.length;
+    const end = html.indexOf('"', start);
+
+    if (start < 0) {
+      return null;
     }
+
+    const parsedImage = html.slice(start, end);
+
+    return `http:${parsedImage}`;
+  }
+
+  fetchPokemonBiology = async (wikiDataResponse) => {
+    const wikiContent = await wikiDataResponse.content();
+    const biology = wikiContent.find(section => section.title.includes(POKEMON_BIO_CONTENT));
+
+    return biology || '';
   }
 }
 

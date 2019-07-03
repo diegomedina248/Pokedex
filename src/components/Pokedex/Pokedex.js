@@ -1,5 +1,6 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { View, FlatList } from 'react-native';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import styles from './styles';
@@ -13,10 +14,16 @@ import { fetchPokemonList, actionTypes } from 'actions/PokemonActions';
 import { getPokemonInfo } from 'selectors/PokemonSelectors';
 import { useCustomBackAction } from 'hooks/NavigationHooks';
 import { usePaginatedElements } from 'hooks/PaginatedHooks';
+import { isLoadingSelector } from 'selectors/StatusSelectors';
 
 const COLUMNS = 2;
 
 const Pokedex = ({ navigation }) => {
+  let onEndReachedCalledDuringMomentum = useRef(true).current;
+  const isLoading = useSelector(state => (
+    isLoadingSelector([actionTypes.FETCH_POKEMON_LIST], state)
+  ));
+
   useCustomBackAction(navigation, () => true);
   const { currentElements, hasMorePages, nextPage } = usePaginatedElements(
     actionTypes.FETCH_POKEMON_LIST,
@@ -25,12 +32,23 @@ const Pokedex = ({ navigation }) => {
   );
 
   const keyExtractor = item => `${item.id}`;
-  const onPress = id => navigation.navigate(POKEMON, {
-    [POKEMON_ID]: id,
-  });
+  const onPress = (id) => {
+    if (isLoading) {
+      return;
+    }
+
+    navigation.navigate(POKEMON, {
+      [POKEMON_ID]: id,
+    });
+  };
+
+  const onMomentumScrollBegin = () => {
+    onEndReachedCalledDuringMomentum = false;
+  };
   const onEndReached = useCallback(() => {
-    if (hasMorePages) {
+    if (!onEndReachedCalledDuringMomentum) {
       nextPage();
+      onEndReachedCalledDuringMomentum = true;
     }
   }, [hasMorePages, nextPage]);
 
@@ -62,7 +80,9 @@ const Pokedex = ({ navigation }) => {
           contentContainerStyle={styles.contentContainer}
           showsVerticalScrollIndicator={false}
           ListFooterComponent={renderFooter()}
+          onEndReachedThreshold={0.5}
           onEndReached={onEndReached}
+          onMomentumScrollBegin={onMomentumScrollBegin}
         />
       </View>
     </View>

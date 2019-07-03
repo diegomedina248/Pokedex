@@ -51,13 +51,13 @@ const styles = StyleSheet.create({
   itemImageContainer: {
     position: 'absolute',
     flex: 1,
-    bottom: 0,
-    right: 0,
+    bottom: 5,
+    right: 5,
     overflow: 'visible',
   },
   itemImageBackground: {
     position: 'absolute',
-    bottom: -10,
+    bottom: -12,
     right: -10,
     width: 85,
     height: 85,

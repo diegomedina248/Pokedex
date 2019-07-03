@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { View, Text, Animated } from 'react-native';
 import { Transition } from 'react-navigation-fluid-transitions';
 import PropTypes from 'prop-types';
 import FastImage from 'react-native-fast-image';
@@ -9,8 +9,8 @@ import colors from 'helpers/PokemonColors';
 
 import pokeballIcon from 'assets/ic_pokeball/ic_pokeball.png';
 import Chip from 'components/common/Chip';
+import CustomTouchable from 'components/common/CustomTouchable';
 
-const OPACITY_ON_HIGHLIGHT = 0.85;
 const MAX_TYPES = 2;
 
 const PokemonItem = ({
@@ -25,7 +25,6 @@ const PokemonItem = ({
   const handlePress = () => onPress(id);
 
   const pokemonColors = colors[baseColor];
-
   const wrapperStyles = {
     backgroundColor: pokemonColors.primary,
     borderColor: pokemonColors.secondary,
@@ -43,40 +42,57 @@ const PokemonItem = ({
     />
   ));
 
-  return (
-    <TouchableOpacity
-      onPress={handlePress}
-      activeOpacity={OPACITY_ON_HIGHLIGHT}
-      style={[
-        styles.itemContainer,
-        wrapperStyles,
-      ]}
-    >
-      <Text
+  const renderView = (value) => {
+    const rotateValue = value.interpolate({
+      inputRange: [0, 1],
+      outputRange: ['0deg', '100deg'],
+    });
+
+    return (
+      <View
         style={[
-          styles.itemNumber,
-          {
-            color: pokemonColors.secondary,
-          },
+          styles.itemContainer,
+          wrapperStyles,
         ]}
       >
-        {`#${pokemonNumber}`}
-      </Text>
-      <Text style={styles.itemName}>{name}</Text>
-      {typeChips}
-      <Image
-        style={styles.itemImageBackground}
-        source={pokeballIcon}
-      />
-      <Transition shared={`image-${id}`}>
-        <View style={styles.itemImageContainer}>
-          <FastImage
-            source={{ uri: defaultImage }}
-            style={styles.itemImage}
-          />
-        </View>
-      </Transition>
-    </TouchableOpacity>
+        <Text
+          style={[
+            styles.itemNumber,
+            {
+              color: pokemonColors.secondary,
+            },
+          ]}
+        >
+          {`#${pokemonNumber}`}
+        </Text>
+        <Text style={styles.itemName}>{name}</Text>
+        {typeChips}
+        <Animated.Image
+          style={[
+            {
+              transform: [{ rotate: rotateValue }],
+            },
+            styles.itemImageBackground,
+          ]}
+          source={pokeballIcon}
+        />
+        <Transition shared={`image-${id}`}>
+          <View style={styles.itemImageContainer}>
+            <FastImage
+              source={{ uri: defaultImage }}
+              style={styles.itemImage}
+            />
+          </View>
+        </Transition>
+      </View>
+    );
+  };
+
+  return (
+    <CustomTouchable
+      onPress={handlePress}
+      render={renderView}
+    />
   );
 };
 
@@ -94,4 +110,4 @@ PokemonItem.propTypes = {
   onPress: PropTypes.func.isRequired,
 };
 
-export default props => useMemo(() => <PokemonItem {...props} />, [props]);
+export default PokemonItem;
