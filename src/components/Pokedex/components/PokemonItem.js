@@ -10,7 +10,6 @@ import colors from 'helpers/PokemonColors';
 import pokeballIcon from 'assets/ic_pokeball/ic_pokeball.png';
 import Chip from 'components/common/Chip';
 
-const ID_DIGITS = 3;
 const OPACITY_ON_HIGHLIGHT = 0.85;
 const MAX_TYPES = 2;
 
@@ -18,14 +17,14 @@ const PokemonItem = ({
   id,
   name,
   baseColor,
-  sprites,
+  defaultImage,
+  pokemonNumber,
   types,
   onPress,
 }) => {
   const handlePress = () => onPress(id);
 
   const pokemonColors = colors[baseColor];
-  const pokemonNumber = `00${id}`.slice(-ID_DIGITS);
 
   const wrapperStyles = {
     backgroundColor: pokemonColors.primary,
@@ -72,7 +71,7 @@ const PokemonItem = ({
       <Transition shared={`image-${id}`}>
         <View style={styles.itemImageContainer}>
           <FastImage
-            source={{ uri: sprites.frontDefault }}
+            source={{ uri: defaultImage }}
             style={styles.itemImage}
           />
         </View>
@@ -85,9 +84,8 @@ PokemonItem.propTypes = {
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   baseColor: PropTypes.string.isRequired,
-  sprites: PropTypes.shape({
-    frontDefault: PropTypes.string,
-  }).isRequired,
+  defaultImage: PropTypes.string.isRequired,
+  pokemonNumber: PropTypes.string.isRequired,
   types: PropTypes.arrayOf(PropTypes.shape({
     type: PropTypes.shape({
       type: PropTypes.string,

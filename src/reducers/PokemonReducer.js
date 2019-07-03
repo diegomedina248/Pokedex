@@ -2,7 +2,8 @@ import createReducer from './CreateReducer';
 import { actionTypes } from 'actions/PokemonActions';
 
 const initialState = {
-  pokemonList: [],
+  elements: [],
+  count: 0,
 };
 
 const fetchPokemonListRequest = state => ({
@@ -11,7 +12,11 @@ const fetchPokemonListRequest = state => ({
 
 const fetchPokemonListSuccess = (state, action) => ({
   ...state,
-  pokemonList: action.pokemonList,
+  elements: [
+    ...state.elements,
+    ...action.elements,
+  ],
+  count: action.count,
 });
 
 const handlers = {

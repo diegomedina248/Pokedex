@@ -41,7 +41,7 @@ const PokedexLoading = ({ navigation }) => {
   });
 
   useEffect(() => {
-    dispatch(fetchPokemonList);
+    dispatch(fetchPokemonList());
   }, [dispatch]);
 
   const appearStatic = () => ({
