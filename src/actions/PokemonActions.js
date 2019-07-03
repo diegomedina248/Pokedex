@@ -16,16 +16,17 @@ const fetchPokemonListError = error => ({
   error,
 });
 
-const fetchPokemonListSuccess = pokemonList => ({
+const fetchPokemonListSuccess = (elements, count) => ({
   type: actionTypes.FETCH_POKEMON_LIST_SUCCESS,
-  pokemonList,
+  elements,
+  count,
 });
 
-export const fetchPokemonList = async (dispatch) => {
+export const fetchPokemonList = (offset = 0) => async (dispatch) => {
   dispatch(fetchPokemonListRequest());
   try {
-    const pokemonList = await pokemonController.fetchPokemonList();
-    dispatch(fetchPokemonListSuccess(pokemonList));
+    const { elements, count } = await pokemonController.fetchPokemonList(offset);
+    dispatch(fetchPokemonListSuccess(elements, count));
   } catch (error) {
     dispatch(fetchPokemonListError(error));
   }

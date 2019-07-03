@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { WHITE } from 'helpers/Colors';
+import { WHITE, MOJO } from 'helpers/Colors';
 
 const styles = StyleSheet.create({
   container: {
@@ -68,6 +68,16 @@ const styles = StyleSheet.create({
   itemImage: {
     width: 70,
     height: 70,
+  },
+  listLoadingContainer: {
+    flex: 1,
+    paddingTop: 10,
+    paddingBottom: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  listLoadingImage: {
+    tintColor: MOJO,
   },
 });
 

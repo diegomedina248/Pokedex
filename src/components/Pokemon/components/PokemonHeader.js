@@ -11,21 +11,19 @@ import pokeballIcon from 'assets/ic_pokeball/ic_pokeball.png';
 import backIcon from 'assets/ic_back/ic_back.png';
 import Chip from 'components/common/Chip';
 
-const ID_DIGITS = 3;
 const BACK_OPACITY_ON_PRESS = 0.7;
-const MAX_TYPES = 3;
+const MAX_TYPES = 2;
 
 const PokemonHeader = ({
   id,
   name,
   baseColor,
-  sprites,
+  defaultImage,
+  pokemonNumber,
   types,
   onBackPress,
 }) => {
   const pokemonColors = colors[baseColor];
-  const pokemonNumber = `00${id}`.slice(-ID_DIGITS);
-
   const wrapperStyles = {
     backgroundColor: pokemonColors.primary,
   };
@@ -78,7 +76,7 @@ const PokemonHeader = ({
       <Transition shared={`image-${id}`}>
         <View style={styles.itemImageContainer}>
           <FastImage
-            source={{ uri: sprites.frontDefault }}
+            source={{ uri: defaultImage }}
             style={styles.itemImage}
           />
         </View>
@@ -91,9 +89,8 @@ PokemonHeader.propTypes = {
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   baseColor: PropTypes.string.isRequired,
-  sprites: PropTypes.shape({
-    frontDefault: PropTypes.string,
-  }).isRequired,
+  defaultImage: PropTypes.string.isRequired,
+  pokemonNumber: PropTypes.string.isRequired,
   types: PropTypes.arrayOf(PropTypes.shape({
     type: PropTypes.shape({
       type: PropTypes.string,
